@@ -22,6 +22,7 @@ function LoginPage(){
     try {
       const res = await loginUser({ email, password })
       localStorage.setItem('token', res.data.token)
+      localStorage.setItem('user', JSON.stringify(res.data.user))
       navigate('/dashboard')
     } catch (err) {
       setError(err.response?.data?.message || 'Login gagal. Coba lagi.')

@@ -2,7 +2,7 @@ import api from './api'
 
 //asumsi sementara
 export const registerUser = (data) => {
-    //data = {fill_name, email, password}
+    //data = {nama_lengkap, email, password}
     return api.post('/auth/register', data)
 
 }
