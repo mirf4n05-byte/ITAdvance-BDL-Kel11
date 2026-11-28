@@ -55,6 +55,7 @@ function DashboardPage() {
           <span className="navbar-brand fw-bold">ITAdvance</span>
           <div className="navbar-nav ms-auto align-items-center">
             <Link className="nav-link" to="/dashboard">Dashboard</Link>
+            <Link className="nav-link" to="/jadwal">Jadwal</Link>
             <Link className="nav-link" to="/preferensi">Preferensi</Link>
             <button className="btn btn-sm btn-light ms-2" onClick={handleLogout}>Keluar</button>
           </div>
@@ -91,3 +92,25 @@ function DashboardPage() {
                 </div>
               </div>
             </div>
+
+            <div className="col-md-6">
+              <div className="card h-100 text-center">
+                <div className="card-body">
+                  <h5 className="card-title">Streak</h5>
+                  <div className="display-3 fw-bold text-warning">🔥 {status.streak_count}</div>
+                  <p className="card-text">hari berturut-turut</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-12">
+              <TodayReminders />
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  )
+}
+
+export default DashboardPage

@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import PreferencesPage from './pages/PreferencesPage'
 import DashboardPage from './pages/DashboardPage'
+import SchedulePage from './pages/SchedulePage'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/preferensi"element={<ProtectedRoute><PreferencesPage /></ProtectedRoute>}/>
         <Route path="/dashboard"element={<ProtectedRoute><DashboardPage /></ProtectedRoute>}/>
+        <Route path="/jadwal"element={<ProtectedRoute><SchedulePage /></ProtectedRoute>}/>
       </Routes>
     </BrowserRouter>
   )
