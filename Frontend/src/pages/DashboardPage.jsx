@@ -56,6 +56,7 @@ function DashboardPage() {
           <div className="navbar-nav ms-auto align-items-center">
             <Link className="nav-link" to="/dashboard">Dashboard</Link>
             <Link className="nav-link" to="/jadwal">Jadwal</Link>
+            <Link className="nav-link" to="/karier">Karier</Link>
             <Link className="nav-link" to="/preferensi">Preferensi</Link>
             <button className="btn btn-sm btn-light ms-2" onClick={handleLogout}>Keluar</button>
           </div>

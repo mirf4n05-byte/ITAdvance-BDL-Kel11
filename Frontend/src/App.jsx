@@ -6,6 +6,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import PreferencesPage from './pages/PreferencesPage'
 import DashboardPage from './pages/DashboardPage'
 import SchedulePage from './pages/SchedulePage'
+import CareerPage from './pages/CareerPage'
 
 function App() {
   return (
@@ -14,9 +15,10 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/preferensi" element={<ProtectedRoute><PreferencesPage /></ProtectedRoute>}/>
-        <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>}/>
-        <Route path="/jadwal" element={<ProtectedRoute><SchedulePage /></ProtectedRoute>}/>
+        <Route path="/preferensi" element={<ProtectedRoute><PreferencesPage /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+        <Route path="/jadwal" element={<ProtectedRoute><SchedulePage /></ProtectedRoute>} />
+        <Route path="/karier" element={<ProtectedRoute><CareerPage /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   )
