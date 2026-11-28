@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import PreferencesPage from './pages/PreferencesPage'
+import DashboardPage from './pages/DashboardPage'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/preferensi"element={<ProtectedRoute><PreferencesPage /></ProtectedRoute>}/>
+        <Route path="/dashboard"element={<ProtectedRoute><DashboardPage /></ProtectedRoute>}/>
       </Routes>
     </BrowserRouter>
   )
