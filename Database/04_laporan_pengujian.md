@@ -31,8 +31,9 @@
 - Hasil: Data berhasil dimasukkan.
 
 ## 5. Pengujian Relasi Antar Tabel
-- Pengujian: Relasi foreign key pada tabel database baru.
-- Hasil: Struktur foreign key telah didefinisikan dalam script SQL. Pengujian relasi melalui database masih perlu dilakukan.
+- Pengujian: Relasi Foreign Key pada 9 tabel baru.
+- Jumlah Foreign Key: 9.
+- Hasil: Berhasil dibuat dan terdeteksi di database Oracle XE.
 
 ## 6. Kesimpulan
 Berdasarkan pengujian yang telah dilakukan, database ITAdvance-BDL menggunakan Oracle XE dengan 9 tabel baru. Sebanyak 4 data bidang IT dan 9 data materi pembelajaran telah berhasil dimasukkan. Pengujian relasi foreign key masih perlu diselesaikan untuk memastikan hubungan antar tabel berjalan dengan baik.
