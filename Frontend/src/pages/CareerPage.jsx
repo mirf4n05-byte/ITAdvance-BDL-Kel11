@@ -1,35 +1,31 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import {
-  getRoadmap,
-  updateChecklist,
-  saveLinkedin,
-  getLinkedinSummary,
-} from '../services/careerService'
+import { getRoadmap, updateChecklist } from '../services/careerService'
+import { getCheckinStatus } from '../services/checkinService'
 
-// Oracle mengembalikan nama kolom huruf besar, jadi baca dua-duanya
 const pick = (obj, key) => obj?.[key.toUpperCase()] ?? obj?.[key.toLowerCase()]
 
 function CareerPage() {
   const navigate = useNavigate()
+  const user = JSON.parse(localStorage.getItem('user') || 'null')
+
   const [items, setItems] = useState([])
-  const [percent, setPercent] = useState(0)
-  const [linkedin, setLinkedin] = useState('')
+  const [linkedin, setLinkedin] = useState(localStorage.getItem('linkedin_url') || '')
   const [summary, setSummary] = useState('')
   const [showSummary, setShowSummary] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
 
+  const doneCount = items.filter((it) => pick(it, 'status') === 'SELESAI').length
+  const percent = items.length ? Math.round((doneCount / items.length) * 100) : 0
+
   const load = async () => {
     try {
       const res = await getRoadmap()
-      // ASUMSI: { checklist: [...], readiness_percent: 40, linkedin_url: '...' }
-      setItems(res.data.checklist || [])
-      setPercent(res.data.readiness_percent || 0)
-      setLinkedin(res.data.linkedin_url || '')
+      setItems(res.data.roadmap || [])
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Gagal memuat roadmap. Pastikan backend jalan.')
+      setError(err.response?.data?.message || err.message || 'Gagal memuat roadmap.')
     } finally {
       setLoading(false)
     }
@@ -41,7 +37,7 @@ function CareerPage() {
 
   const handleToggle = async (it) => {
     setError('')
-    const id = pick(it, 'id_langkah') ?? pick(it, 'id')
+    const id = pick(it, 'id_langkah')
     const done = pick(it, 'status') === 'SELESAI'
     try {
       await updateChecklist(id, done ? 'BELUM' : 'SELESAI')
@@ -51,31 +47,36 @@ function CareerPage() {
     }
   }
 
-  const handleSaveLinkedin = async () => {
+  // Backend belum punya endpoint LinkedIn, jadi URL disimpan di browser
+  const handleSaveLinkedin = () => {
     setError('')
     setMessage('')
     if (!linkedin.trim()) {
       setError('Isi alamat profil LinkedIn dulu.')
       return
     }
-    try {
-      await saveLinkedin(linkedin.trim())
-      setMessage('Alamat LinkedIn tersimpan.')
-    } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Gagal menyimpan LinkedIn.')
-    }
+    localStorage.setItem('linkedin_url', linkedin.trim())
+    setMessage('Alamat LinkedIn tersimpan di browser ini.')
   }
 
+  // Ringkasan dibuat di frontend dari data streak dan checklist
   const handleSummary = async () => {
     setError('')
+    let streak = 0
     try {
-      const res = await getLinkedinSummary()
-      // ASUMSI: { summary: '...' }
-      setSummary(res.data.summary || '')
-      setShowSummary(true)
-    } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Gagal membuat ringkasan.')
+      const res = await getCheckinStatus()
+      streak = res.data.streak_count || 0
+    } catch {
+      // abaikan, pakai 0
     }
+    const nama = user?.nama_lengkap || 'Saya'
+    const text =
+      `${nama} sedang belajar IT secara terarah lewat ITAdvance. ` +
+      `Konsisten belajar ${streak} hari berturut-turut dan telah menyelesaikan ` +
+      `${doneCount} dari ${items.length} langkah persiapan karier (${percent}%).` +
+      (linkedin ? ` Profil LinkedIn: ${linkedin}` : '')
+    setSummary(text)
+    setShowSummary(true)
   }
 
   const handleCopy = async () => {
@@ -141,7 +142,7 @@ function CareerPage() {
                       const done = pick(it, 'status') === 'SELESAI'
                       return (
                         <li
-                          key={pick(it, 'id_langkah') ?? pick(it, 'id') ?? i}
+                          key={pick(it, 'id_langkah') ?? i}
                           className="list-group-item d-flex align-items-center px-0"
                         >
                           <input
@@ -151,8 +152,9 @@ function CareerPage() {
                             onChange={() => handleToggle(it)}
                           />
                           <span className={done ? 'text-decoration-line-through text-muted' : ''}>
-                            {pick(it, 'judul')}
+                            {pick(it, 'judul_langkah')}
                           </span>
+                          <span className="badge bg-info text-dark ms-2">{pick(it, 'kategori')}</span>
                           <span className={`badge ms-auto ${done ? 'bg-success' : 'bg-secondary'}`}>
                             {pick(it, 'status')}
                           </span>

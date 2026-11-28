@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { generateSchedule, getSchedules, completeSchedule } from '../services/scheduleService'
 
-// Oracle mengembalikan nama kolom huruf besar, jadi baca dua-duanya
 const pick = (obj, key) => obj?.[key.toUpperCase()] ?? obj?.[key.toLowerCase()]
 
 function SchedulePage() {
@@ -16,10 +15,9 @@ function SchedulePage() {
   const load = async () => {
     try {
       const res = await getSchedules()
-      // ASUMSI: response berbentuk { schedules: [...] }
-      setItems(res.data.schedules || [])
+      setItems(res.data.jadwal || [])
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Gagal memuat jadwal. Pastikan backend jalan.')
+      setError(err.response?.data?.message || err.message || 'Gagal memuat jadwal.')
     } finally {
       setLoading(false)
     }
@@ -38,7 +36,7 @@ function SchedulePage() {
       setMessage(res.data.message || 'Jadwal berhasil dibuat.')
       await load()
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Gagal membuat jadwal. Coba lagi.')
+      setError(err.response?.data?.message || err.message || 'Gagal membuat jadwal.')
     } finally {
       setGenerating(false)
     }
@@ -97,6 +95,7 @@ function SchedulePage() {
                 <tr>
                   <th>Materi</th>
                   <th>Tanggal</th>
+                  <th>Durasi</th>
                   <th>Status</th>
                   <th></th>
                 </tr>
@@ -108,8 +107,9 @@ function SchedulePage() {
                   const done = status === 'SELESAI'
                   return (
                     <tr key={id}>
-                      <td>{pick(it, 'judul')}</td>
-                      <td>{pick(it, 'tanggal')}</td>
+                      <td>{pick(it, 'judul_materi')}</td>
+                      <td>{String(pick(it, 'tanggal_jadwal') ?? '').slice(0, 10)}</td>
+                      <td>{pick(it, 'durasi_jam')} jam</td>
                       <td>
                         <span className={`badge ${done ? 'bg-success' : 'bg-secondary'}`}>
                           {status}

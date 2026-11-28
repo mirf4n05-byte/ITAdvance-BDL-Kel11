@@ -141,7 +141,6 @@ function PreferencesPage() {
             <select className="form-select" name="waktu_pilihan" value={form.waktu_pilihan} onChange={handleChange}>
               <option value="PAGI">Pagi</option>
               <option value="SIANG">Siang</option>
-              <option value="SORE">Sore</option>
               <option value="MALAM">Malam</option>
             </select>
           </div>
