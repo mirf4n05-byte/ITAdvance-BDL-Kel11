@@ -29,7 +29,7 @@ function CareerPage() {
       setPercent(res.data.readiness_percent || 0)
       setLinkedin(res.data.linkedin_url || '')
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal memuat roadmap. Pastikan backend jalan.')
+      setError(err.response?.data?.message || err.message || 'Gagal memuat roadmap. Pastikan backend jalan.')
     } finally {
       setLoading(false)
     }
@@ -47,7 +47,7 @@ function CareerPage() {
       await updateChecklist(id, done ? 'BELUM' : 'SELESAI')
       await load()
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal memperbarui status.')
+      setError(err.response?.data?.message || err.message || 'Gagal memperbarui status.')
     }
   }
 
@@ -62,7 +62,7 @@ function CareerPage() {
       await saveLinkedin(linkedin.trim())
       setMessage('Alamat LinkedIn tersimpan.')
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal menyimpan LinkedIn.')
+      setError(err.response?.data?.message || err.message || 'Gagal menyimpan LinkedIn.')
     }
   }
 
@@ -74,7 +74,7 @@ function CareerPage() {
       setSummary(res.data.summary || '')
       setShowSummary(true)
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal membuat ringkasan.')
+      setError(err.response?.data?.message || err.message || 'Gagal membuat ringkasan.')
     }
   }
 

@@ -28,7 +28,7 @@ function RegisterPage() {
       await registerUser({nama_lengkap: fullName, email, password})
       navigate('/login')
     } catch (err) {
-      setError(err.response?.data?.message || 'Pendaftaran gagal. Coba lagi.')
+      setError(err.response?.data?.message || err.message || 'Pendaftaran gagal. Coba lagi.')
     } finally {
       setLoading(false)
     }

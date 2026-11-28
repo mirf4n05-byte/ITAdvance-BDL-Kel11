@@ -25,7 +25,7 @@ function LoginPage(){
       localStorage.setItem('user', JSON.stringify(res.data.user))
       navigate('/dashboard')
     } catch (err) {
-      setError(err.response?.data?.message || 'Login gagal. Coba lagi.')
+      setError(err.response?.data?.message || err.message || 'Login gagal. Coba lagi.')
     } finally {
       setLoading(false)
     }

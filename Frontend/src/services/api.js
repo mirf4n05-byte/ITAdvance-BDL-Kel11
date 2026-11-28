@@ -16,11 +16,13 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Hanya paksa login ulang kalau memang sedang punya token (token kedaluwarsa)
     if (error.response && error.response.status === 401 && localStorage.getItem('token')) {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
       window.location.href = '/login'
+    }
+    if (!error.response) {
+      error.message = 'Tidak bisa terhubung ke server. Periksa koneksi atau coba lagi nanti.'
     }
     return Promise.reject(error)
   }

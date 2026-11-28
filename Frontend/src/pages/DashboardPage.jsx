@@ -19,7 +19,7 @@ function DashboardPage() {
         const res = await getCheckinStatus()
         setStatus(res.data)
       } catch (err) {
-        setError(err.response?.data?.message || 'Gagal memuat data. Pastikan backend jalan.')
+        setError(err.response?.data?.message || err.message || 'Gagal memuat data. Pastikan backend jalan.')
       } finally {
         setLoading(false)
       }
@@ -36,7 +36,7 @@ function DashboardPage() {
       setStatus({ checked_in_today: true, streak_count: res.data.streak_count })
       setMessage(res.data.message)
     } catch (err) {
-      setError(err.response?.data?.message || 'Check-in gagal. Coba lagi.')
+      setError(err.response?.data?.message || err.message || 'Check-in gagal. Coba lagi.')
     } finally {
       setProcessing(false)
     }

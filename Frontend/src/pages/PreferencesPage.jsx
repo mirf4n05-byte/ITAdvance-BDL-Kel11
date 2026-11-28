@@ -42,7 +42,7 @@ function PreferencesPage() {
           })
         }
       } catch (err) {
-        setError(err.response?.data?.message || 'Gagal memuat data. Pastikan backend jalan.')
+        setError(err.response?.data?.message || err.message || 'Gagal memuat data. Pastikan backend jalan.')
       } finally {
         setLoading(false)
       }
@@ -68,7 +68,7 @@ function PreferencesPage() {
       await saveProfil(form)
       navigate('/dashboard')
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal menyimpan. Coba lagi.')
+      setError(err.response?.data?.message || err.message || 'Gagal menyimpan. Coba lagi.')
     } finally {
       setSaving(false)
     }

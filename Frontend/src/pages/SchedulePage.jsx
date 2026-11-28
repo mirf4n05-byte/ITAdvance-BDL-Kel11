@@ -19,7 +19,7 @@ function SchedulePage() {
       // ASUMSI: response berbentuk { schedules: [...] }
       setItems(res.data.schedules || [])
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal memuat jadwal. Pastikan backend jalan.')
+      setError(err.response?.data?.message || err.message || 'Gagal memuat jadwal. Pastikan backend jalan.')
     } finally {
       setLoading(false)
     }
@@ -38,7 +38,7 @@ function SchedulePage() {
       setMessage(res.data.message || 'Jadwal berhasil dibuat.')
       await load()
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal membuat jadwal. Coba lagi.')
+      setError(err.response?.data?.message || err.message || 'Gagal membuat jadwal. Coba lagi.')
     } finally {
       setGenerating(false)
     }
@@ -50,7 +50,7 @@ function SchedulePage() {
       await completeSchedule(id)
       await load()
     } catch (err) {
-      setError(err.response?.data?.message || 'Gagal menandai selesai.')
+      setError(err.response?.data?.message || err.message || 'Gagal menandai selesai.')
     }
   }
 
