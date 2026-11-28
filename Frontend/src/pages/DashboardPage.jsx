@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getCheckinStatus, doCheckin } from '../services/checkinService'
+import TodayReminders from '../components/TodayReminders'
 
 function DashboardPage() {
   const navigate = useNavigate()
@@ -90,32 +91,3 @@ function DashboardPage() {
                 </div>
               </div>
             </div>
-
-            <div className="col-md-6">
-              <div className="card h-100 text-center">
-                <div className="card-body">
-                  <h5 className="card-title">Streak</h5>
-                  <div className="display-3 fw-bold text-warning">🔥 {status.streak_count}</div>
-                  <p className="card-text">hari berturut-turut</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-12">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">Pengingat Hari Ini</h5>
-                  <p className="card-text text-muted mb-0">
-                    Belum ada materi terjadwal. Fitur ini menyusul di Hari 3.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </>
-  )
-}
-
-export default DashboardPage
